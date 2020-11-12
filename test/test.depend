@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1599478627 source:d:\01guojianyu\gb32960pack\test\platform_types.h
+
+1604724946 source:d:\01guojianyu\gb32960pack\test\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1605098817 source:d:\workbackcup_gjy\05_tbox\07_gb32960\test\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
