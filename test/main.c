@@ -301,74 +301,105 @@ uint16 gb32960AlarmPackToCharArray(gb32960DataAlarmPack* pDataPack,
 }
 
 
+//int main()
+//{
+//    uint8   charArr[256] = {0};
+//    uint8   charFullVehicleArr[256] = {0};
+//    uint8   charMotorDataArr[256] = {0};
+//    uint8   charAlarmArr[10] = {0};
+//
+//    uint16  dataLen = 0;
+//    uint8   bccCode = 0;
+//    int     i = 0;
+//
+//    FILE*   fp;
+//    fp = fopen ("file.txt", "w+");
+//
+//    testPack.datalen = 27;
+//
+//    gb32960FullVehiclePackToCharArray(&testFullVehiclePack, charFullVehicleArr);
+//
+//    memcpy(testPack.data, &testTimePack, 6);
+//    memcpy(&testPack.data[6], charFullVehicleArr, 21);
+//
+//    dataLen = gb32960DataPackToCharArray(&testPack, charArr);
+//    bccCode = CalculateBCC(charArr, dataLen);
+//
+//    for(i = 0; i < dataLen; ++i)
+//    {
+//        fprintf(fp, "%.2x ", charArr[i]);
+//    }
+//    fprintf(fp, "%.2x\n", bccCode);
+//    fprintf(fp, "-------------------\n");
+//
+//    dataLen = gb32960DataPackToCharArray(&testACKPack, charArr);
+//    bccCode = CalculateBCC(charArr, dataLen);
+//
+//    for(i = 0; i < dataLen; ++i)
+//    {
+//        fprintf(fp, "%.2x ", charArr[i]);
+//    }
+//    fprintf(fp, "%.2x\n", bccCode);
+//    fprintf(fp, "-------------------\n");
+//
+//
+//    dataLen = gb32960DataMotorPackToCharArray(&testDataMotorPack, charMotorDataArr);
+//    memcpy(&testPack.data[6], charMotorDataArr, dataLen);
+//    testPack.datalen = 6 + dataLen + 1;
+//    dataLen = gb32960DataPackToCharArray(&testPack, charArr);
+//    bccCode = CalculateBCC(charArr, dataLen);
+//
+//    for(i = 0; i < dataLen; ++i)
+//    {
+//        fprintf(fp, "%.2x ", charArr[i]);
+//    }
+//    fprintf(fp, "%.2x\n", bccCode);
+//    fprintf(fp, "-------------------\n");
+//
+//    dataLen = gb32960AlarmPackToCharArray(&testDataAlarmPack, charAlarmArr);
+//    memcpy(&testPack.data[6], charAlarmArr, dataLen);
+//    testPack.datalen = 6 + dataLen + 1;
+//    dataLen = gb32960DataPackToCharArray(&testPack, charArr);
+//    bccCode = CalculateBCC(charArr, dataLen);
+//
+//    for(i = 0; i < dataLen; ++i)
+//    {
+//        fprintf(fp, "%.2x ", charArr[i]);
+//    }
+//    fprintf(fp, "%.2x\n", bccCode);
+//    fprintf(fp, "-------------------\n");
+//
+//    fclose(fp);
+//    return 0;
+//}
+
 int main()
 {
     uint8   charArr[256] = {0};
     uint8   charFullVehicleArr[256] = {0};
-    uint8   charMotorDataArr[256] = {0};
-    uint8   charAlarmArr[10] = {0};
-
     uint16  dataLen = 0;
     uint8   bccCode = 0;
     int     i = 0;
 
     FILE*   fp;
-    fp = fopen ("file.txt", "w+");
+    fp = fopen ("test.txt", "w+");
 
-    testPack.datalen = 27;
-
-    gb32960FullVehiclePackToCharArray(&testFullVehiclePack, charFullVehicleArr);
+    testPack.datalen = 6 + gb32960FullVehiclePackToCharArray(&testFullVehiclePack, charFullVehicleArr);
 
     memcpy(testPack.data, &testTimePack, 6);
     memcpy(&testPack.data[6], charFullVehicleArr, 21);
 
     dataLen = gb32960DataPackToCharArray(&testPack, charArr);
     bccCode = CalculateBCC(charArr, dataLen);
+    charArr[dataLen] = bccCode;
 
-    for(i = 0; i < dataLen; ++i)
+    for(i = 0; i < dataLen + 1; ++i)
     {
         fprintf(fp, "%.2x ", charArr[i]);
     }
-    fprintf(fp, "%.2x\n", bccCode);
-    fprintf(fp, "-------------------\n");
-
-    dataLen = gb32960DataPackToCharArray(&testACKPack, charArr);
-    bccCode = CalculateBCC(charArr, dataLen);
-
-    for(i = 0; i < dataLen; ++i)
-    {
-        fprintf(fp, "%.2x ", charArr[i]);
-    }
-    fprintf(fp, "%.2x\n", bccCode);
-    fprintf(fp, "-------------------\n");
-
-
-    dataLen = gb32960DataMotorPackToCharArray(&testDataMotorPack, charMotorDataArr);
-    memcpy(&testPack.data[6], charMotorDataArr, dataLen);
-    testPack.datalen = 6 + dataLen + 1;
-    dataLen = gb32960DataPackToCharArray(&testPack, charArr);
-    bccCode = CalculateBCC(charArr, dataLen);
-
-    for(i = 0; i < dataLen; ++i)
-    {
-        fprintf(fp, "%.2x ", charArr[i]);
-    }
-    fprintf(fp, "%.2x\n", bccCode);
-    fprintf(fp, "-------------------\n");
-
-    dataLen = gb32960AlarmPackToCharArray(&testDataAlarmPack, charAlarmArr);
-    memcpy(&testPack.data[6], charAlarmArr, dataLen);
-    testPack.datalen = 6 + dataLen + 1;
-    dataLen = gb32960DataPackToCharArray(&testPack, charArr);
-    bccCode = CalculateBCC(charArr, dataLen);
-
-    for(i = 0; i < dataLen; ++i)
-    {
-        fprintf(fp, "%.2x ", charArr[i]);
-    }
-    fprintf(fp, "%.2x\n", bccCode);
-    fprintf(fp, "-------------------\n");
 
     fclose(fp);
     return 0;
 }
+
+
